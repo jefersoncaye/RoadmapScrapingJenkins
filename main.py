@@ -18,11 +18,13 @@ def buscaAbas(html):
 """        listaAbasLink.append(aba.get('href'))
         listaAbas.append(aba.getText())"""
 
-def formataHTML(html):
-    soup = BeautifulSoup(html, 'html5lib')
-    for link in soup.find_all('a',
-                              attrs={'href': re.compile("^http://")}):
-        print(link.get('href'))
+def buscaLinks(dicionario):
+    for i in dicionario.items():
+        print(i[0])
+        soup = BeautifulSoup(i[1], 'html5lib')
+        for link in soup.find_all('a',
+                                  attrs={"class":"jenkins-table__link model-link inside"}):
+            print(link.get('href'))
 
 def buscaHtmlPorAba(dicionarioAbas):
     for link in dicionarioAbas.items():
@@ -32,5 +34,5 @@ def buscaHtmlPorAba(dicionarioAbas):
 html = buscaPagina('http://cit/view/Empresarial/job/Empresarial%20-%20SQL%20Server/', 'testcomplete', '12345')
 buscaAbas(html)
 buscaHtmlPorAba(dicionarioAbas)
-print(htmlPorAba.keys())
+buscaLinks(htmlPorAba)
 
