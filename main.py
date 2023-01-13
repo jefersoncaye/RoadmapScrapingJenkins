@@ -46,8 +46,8 @@ def buscaProjeto(link):
         return projeto
     else: return ['', '']
 
-def criaTXT(dicionarioTestesPorAba):
-    with open("documentacao.txt", "w") as txt:
+def criaTXTModeloRoadmap(dicionarioTestesPorAba):
+    with open("documentacaoRoadmap.txt", "w") as txt:
         txt.write('h1. Listagem de Testes')
         cont = 1
         for item in dicionarioTestesPorAba.items():
@@ -59,15 +59,37 @@ def criaTXT(dicionarioTestesPorAba):
             for teste in item[1]:
                 linkTeste = link + '/' + teste
                 txt.write(f'\nh3. {cont2} - "{teste.replace("job/","").replace("/",(""))}":{linkTeste}')
-                txt.write(f'\n* Project Suite: {buscaProjeto(f"{linkTeste}/configure")[0]}'
-                          f'\n* Project: {buscaProjeto(f"{linkTeste}/configure")[1]}')
+                #txt.write(f'\n* Project Suite: {buscaProjeto(f"{linkTeste}/configure")[0]}'
+                #          f'\n* Project: {buscaProjeto(f"{linkTeste}/configure")[1]}')
                 txt.write('\n')
                 cont2 += 1
         txt.close()
 
+def criaTXTModeloFuncionalidade(dicionarioTestesPorAba):
+    with open("documentacaoFuncionalidade.txt", "w", encoding='utf-8') as txt:
+        txt.write('h1. Testes Empresarial, mapeamento por funcionalidades e rotinas')
+        cont = 1
+        for item in dicionarioTestesPorAba.items():
+            txt.write('\n\n-----------\n\n')
+            txt.write(f'h2. {cont} - {item[0]}')
+            txt.write('\n\n-----------\n')
+            cont += 1
+            cont2 = 1
+            for teste in item[1]:
+                linkTeste = link + teste
+                txt.write(f'\nh3. {cont2} - Documentação do Teste: {teste.replace("job/","").replace("/",(""))}')
+                txt.write('\n\n* *Categoria / Rotina do teste:*')
+                txt.write('\n\n* *Subcategoria:*')
+                txt.write('\n\n* *Objetivo:*')
+                txt.write('\n\n* *Cenário de teste:*')
+                txt.write('\n\nTarefa de implementação do teste:')
+                txt.write(f'\n\nLink do teste: {linkTeste}')
+                txt.write('\n')
+                cont2 += 1
+        txt.close()
 
 html = buscaPagina(link, 'testcomplete', '12345')
 dicionarioAbas = buscaAbas(html)
 htmlPorAba = buscaHtmlPorAba(dicionarioAbas)
 dicionarioTestesPorAba = buscaLinks(htmlPorAba)
-criaTXT(dicionarioTestesPorAba)
+criaTXTModeloFuncionalidade(dicionarioTestesPorAba)
