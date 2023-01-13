@@ -70,6 +70,8 @@ def criaTXTModeloFuncionalidade(dicionarioTestesPorAba):
         txt.write('h1. Testes Empresarial, mapeamento por funcionalidades e rotinas')
         cont = 1
         for item in dicionarioTestesPorAba.items():
+            if item[0].lower() == 'jobs':
+                continue
             txt.write('\n\n-----------\n\n')
             txt.write(f'h2. {cont} - {item[0]}')
             txt.write('\n\n-----------\n')
